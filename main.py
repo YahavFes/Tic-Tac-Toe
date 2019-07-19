@@ -8,12 +8,16 @@ class Board:
         self.curr_turn = 0
         self.board = {}  # Matrix that includes the 9 different squares of the game
         self.result = {}
+
         for i in range(3):
             for j in range(3):
                 self.board[i,j] = Button(self.master_board, height=10, width=15,
                                          command=partial(self.on_square_click,(i,j)))
                 self.board[i,j].grid(row=i,column=j)
                 self.result[i,j] = None
+
+        self.player_turn_label = Label(self.master_board, text='Player 0 Turn')
+        self.player_turn_label.grid(row=3)
 
     def is_there_win(self):
 
@@ -51,6 +55,7 @@ class Board:
             winning_window.mainloop()
 
         self.curr_turn = 1 - self.curr_turn
+        self.player_turn_label.config(text='Player ' + str(self.curr_turn) + ' Turn')
 
     def start(self):
         self.master_board.mainloop()
