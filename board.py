@@ -71,7 +71,6 @@ class Board:
 
         self.player_turn_label.config(text='Player ' + str(self.curr_turn) + ' Turn')
 
-
     def computer_move(self, tuple):
         row, col = tuple
         self.board[row, col].config(bg='blue', state='disabled')
@@ -93,7 +92,7 @@ class Board:
             self.result[1, 1] = 1
         # Choose an empty square
         else:
-            if self.find_empty_square() is None: # If the board is full
+            if self.find_empty_square() is None:  # If the board is full
                 self.handle_tie()
                 return
             self.board[self.find_empty_square()].config(bg='red', state='disabled')
@@ -104,7 +103,6 @@ class Board:
             winning_window = self.create_winning_window("The Computer is the Winner")
             self.board_window.withdraw()
             winning_window.mainloop()
-
 
     def find_blocking_square(self):
 
@@ -153,7 +151,6 @@ class Board:
         tie_window = self.create_winning_window('This is a Tie')
         self.board_window.withdraw()
         tie_window.mainloop()
-
 
     def on_quit_click(self, winning_window):
         winning_window.destroy()

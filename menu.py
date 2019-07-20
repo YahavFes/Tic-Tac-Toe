@@ -6,10 +6,10 @@ class Menu:
     def __init__(self):
 
         self.menu_window = Tk()
-        openning_label = Label(self.menu_window, text='Tic-Tac-Toe', font=("Courier", 44))
+        openning_label = Label(self.menu_window, text='Tic-Tac-Toe', font=("Courier", 44), background='red')
         num_of_players_label = Label(self.menu_window, text='Please select the number of players:')
-        player_1_button = Button(self.menu_window, text='1 Players', command=self.on_1_players_click)
-        player_2_button = Button(self.menu_window, text='2 Players', command=self.on_2_players_click)
+        player_1_button = Button(self.menu_window, text='1 Players', command=self.on_1_players_click, background='blue')
+        player_2_button = Button(self.menu_window, text='2 Players', command=self.on_2_players_click, background='yellow')
         openning_label.pack()
         num_of_players_label.pack()
         player_1_button.pack()
