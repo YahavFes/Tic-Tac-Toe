@@ -3,20 +3,22 @@ from functools import partial
 
 class Board:
 
-    def __init__(self):
-        self.master_board = Tk()
+    def __init__(self, menu_window):
+        self.menu_window = menu_window
+        self.board_window = Toplevel(self.menu_window)
         self.curr_turn = 0
         self.board = {}  # Matrix that includes the 9 different squares of the game
         self.result = {}
 
+        # Initial the board game with the 9 different buttons
         for i in range(3):
             for j in range(3):
-                self.board[i,j] = Button(self.master_board, height=10, width=15,
+                self.board[i,j] = Button(self.board_window, height=10, width=15,
                                          command=partial(self.on_square_click,(i,j)))
                 self.board[i,j].grid(row=i,column=j)
                 self.result[i,j] = None
 
-        self.player_turn_label = Label(self.master_board, text='Player 0 Turn')
+        self.player_turn_label = Label(self.board_window, text='Player 0 Turn')
         self.player_turn_label.grid(row=3)
 
     def is_there_win(self):
@@ -48,19 +50,21 @@ class Board:
         self.result[row,col] = self.curr_turn
 
         if self.is_there_win():
-            winning_window = Toplevel(self.master_board)
+            winning_window = Toplevel(self.board_window)
             label = Label(winning_window, text='Player ' + str(self.curr_turn) + ' is the winner')
+            quit_button = Button(winning_window, text='Back to menu', command=partial(self.on_quit_click,winning_window))
             label.pack()
-            self.master_board.withdraw()
+            quit_button.pack()
+            self.board_window.withdraw()
             winning_window.mainloop()
 
         self.curr_turn = 1 - self.curr_turn
         self.player_turn_label.config(text='Player ' + str(self.curr_turn) + ' Turn')
 
+    def on_quit_click(self, winning_window):
+        winning_window.destroy()
+        self.board_window.destroy()
+        self.menu_window.deiconify()
+
     def start(self):
-        self.master_board.mainloop()
-
-
-if __name__ == '__main__':
-    b = Board()
-    b.start()
+        self.board_window.mainloop()
